@@ -1,3 +1,5 @@
+# Use use the meteor-spk tool to generate a sandstorm package (spk) from this
+# meteor application source code. https://github.com/sandstorm-io/meteor-spk
 @0xa5275bd3ad124e12;
 
 using Spk = import "/sandstorm/package.capnp";
@@ -48,6 +50,26 @@ const pkgdef :Spk.PackageDefinition = (
   # alternative is to automatically detect dependencies by watching what the app
   # opens while running in dev mode. To see what that looks like, run `spk init`
   # without the -A option.)
+
+  bridgeConfig = (
+    viewInfo = (
+      permissions = [(
+        name = "modify",
+        title = (defaultText = "modify"),
+        description = (defaultText = "allows modifying the board"))
+      ],
+      roles = [(
+        title = (defaultText = "editor"),
+        permissions = [true],
+        verbPhrase = (defaultText = "can edit"),
+        default = true
+      ), (
+        title = (defaultText = "reader"),
+        permissions = [false],
+        verbPhrase = (defaultText = "can read")
+      )]
+    )
+  )
 );
 
 const myCommand :Spk.Manifest.Command = (
